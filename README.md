@@ -45,12 +45,11 @@ The system connects:
 pip install -r requirements.txt
 streamlit run app.py
 
+```
+
 
  ## Demo Video
 
 https://github.com/user-attachments/assets/13cd3ee0-ce64-4fe9-8de3-81e27218de13
 
-
-
----
 
