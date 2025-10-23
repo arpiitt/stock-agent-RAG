@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    platform: linux/amd64                  # M1 workaround if image lacks arm64
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: example_root_pass
+      MYSQL_DATABASE: stockdb
+      MYSQL_USER: stockuser
+      MYSQL_PASSWORD: stockpass
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  neo4j:
+    image: neo4j:5.12                       # pick a recent neo4j tag (newer tags often have arm64)
+    platform: linux/amd64                  # optional for Neo4j; if a native arm64 tag exists on hub it can be removed
+    restart: unless-stopped
+    environment:
+      NEO4J_AUTH: "neo4j/neo4jpassword"
+      # extra plugins used in many analytics projects:
+      NEO4JLABS_PLUGINS: '["apoc","graph-data-science"]'
+    ports:
+      - "7474:7474"   # HTTP
+      - "7687:7687"   # Bolt
+    volumes:
+      - neo4j_data:/data
+
+volumes:
+  mysql_data:
+  neo4j_data:
